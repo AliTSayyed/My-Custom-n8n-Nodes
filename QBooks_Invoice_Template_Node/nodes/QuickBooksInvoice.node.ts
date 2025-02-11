@@ -37,32 +37,39 @@ export class QuickBooksInvoice implements INodeType {
 				type: 'json',
 				default: '',
 				required: false,
-				typeOptions: { alwaysOpenEditWindow: false, rows: 1,},
-				placeholder: '{"DocNumber": "12345", "TxnDate": 2025-01-08"}',
 				description: 'Processed QuickBooks JSON data for invoice generation',
+			},
+			{
+				displayName: 'InitalMessage',
+				name: 'initialMessage',
+				type: 'boolean',
+				default: false,
+				required: false,
+				description: 'Turn this on for the first email message.'
 			},
 			{
 				displayName: 'Options',
 				name: 'options',
 				type: 'fixedCollection',
 				default: {},
-				description: 'Optional settings for additional message and PDF button.',
+				description: 'Optional settings for a custom message and/or PDF button.',
 				typeOptions: {
 					multipleValues: false,
-				},
+			},
 				options: [
 					// Add a custom message
 					{
-						displayName: 'Add Message',
+						displayName: 'Custom Message',
 						name: 'messageOption',
 						values: [
 							{
-								displayName: 'Message',
-								name: 'message',
+								displayName: 'Custom Message (can use HTML if needed)',
+								name: 'customMessage',
 								type: 'string',
 								default: '',
-								placeholder: 'Include message here',
-								description: 'A custom message to include in the template.',
+								placeholder: 'Include BODY ONLY of email message here',
+								typeOptions: {editor: 'htmlEditor', rows: 5},
+								description: 'A custom message to send with the invoice. SEND BODY ONLY, the salutation and sign off are already included. To delete this field you need to delete the entire node and restart (n8n bug).',
 							},
 						],
 					},
@@ -94,18 +101,23 @@ export class QuickBooksInvoice implements INodeType {
 
 		for (let i = 0; i < items.length; i++) {
 			const jsonData = this.getNodeParameter('data', i) as object;
+			const initialMessage = this.getNodeParameter('initialMessage', i) as boolean;
 			const options = this.getNodeParameter('options', i) as {
-				messageOption?: { message?: string };
+				messageOption?: { customMessage?: string };
 				pdfOption?: { pdfButton?: boolean };
 			};
-
+			
 			// check for optional message content
-			const message = options?.messageOption?.message ?? '';
+			let customMessage = options?.messageOption || false;
+			const customMessageContent = options?.messageOption?.customMessage ?? '';
+			if (customMessageContent === ''){
+				customMessage = false; // if by accident message option is clicked but no content is input, then ignore the custom message.
+			}
 			// check for optional pdf button
 			const pdfButton = options?.pdfOption?.pdfButton ?? false;
 
 			// Merge all feilds into on object for handlebars tempalte
-			const combinedData = { ...jsonData, message, pdfButton };
+			const combinedData = { ...jsonData, initialMessage, customMessage, customMessageContent, pdfButton };
 
 			// create the invoice template using handlebars
 			try {

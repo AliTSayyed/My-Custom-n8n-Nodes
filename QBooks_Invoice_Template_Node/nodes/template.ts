@@ -6,6 +6,43 @@ export const handlebarsTemplate = `<!DOCTYPE html>
     <title>Invoice Template</title>
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #1f2937; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #f9fafb;">
+ {{#if initialMessage }}
+    <div style="background: white; margin-bottom: 40px; padding: 24px; border-radius: 8px; color: #4b5563; font-family: Arial, Helvetica, sans-serif;">
+    <!-- Message Section -->
+        <p style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 500;">Hello {{#if CustomerName}}{{CustomerName}}{{/if}},</p>
+        
+        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+            I hope you're doing well! Please find attached <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> for your records. <br>
+            This invoice is due on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. Let me know if you have any questions—we're happy to help.
+        </p>
+        
+        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+            Thank you for your business!
+        </p>
+        
+        <p style="margin: 0; font-size: 0.95rem;">
+            Best regards,<br>
+            <span style="font-weight: 500;">{{CompanyName}} - Billing Team</span>
+        </p>
+    </div>
+    {{/if}}
+
+    {{#if customMessage}}
+    <div style="background: white; margin-bottom: 40px; padding: 24px; border-radius: 8px; color: #4b5563; font-family: Arial, Helvetica, sans-serif;">
+      <!-- Custom Message Section -->
+      <p style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 500;">Hello {{#if CustomerName}}{{CustomerName}}{{/if}},</p>
+      
+      <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+        {{{customMessageContent}}}
+      </p>
+      
+      <p style="margin: 0; font-size: 0.95rem;">
+          Best regards,<br>
+          <span style="font-weight: 500;">{{CompanyName}} - Billing Team</span>
+      </p>
+    </div>
+    {{/if}}
+
     <div style="background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden;">
         <!-- Company Info -->
         <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
