@@ -33,7 +33,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
       <p style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 500;">Hello {{#if CustomerName}}{{CustomerName}}{{/if}},</p>
       
       <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
-        {{{customMessageContent}}}
+        {{{customMessage}}}
       </p>
       
       <p style="margin: 0; font-size: 0.95rem;">

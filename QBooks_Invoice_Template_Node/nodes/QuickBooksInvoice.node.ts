@@ -23,12 +23,6 @@ export class QuickBooksInvoice implements INodeType {
 		},
 		inputs: ['main'],
 		outputs: ['main'],
-		// credentials: [
-		// 	{
-		// 		name: 'noAuth',
-		// 		required: false,
-		// 	},
-		// ],
 		properties: [
 			{
 				// Input QuickBooks API Data
@@ -40,7 +34,7 @@ export class QuickBooksInvoice implements INodeType {
 				description: 'Processed QuickBooks JSON data for invoice generation',
 			},
 			{
-				displayName: 'InitalMessage',
+				displayName: 'Inital Outreach',
 				name: 'initialMessage',
 				type: 'boolean',
 				default: false,
@@ -50,42 +44,28 @@ export class QuickBooksInvoice implements INodeType {
 			{
 				displayName: 'Options',
 				name: 'options',
-				type: 'fixedCollection',
+				type: 'collection',
+				placeholder: 'Add option',
 				default: {},
 				description: 'Optional settings for a custom message and/or PDF button.',
-				typeOptions: {
-					multipleValues: false,
-			},
 				options: [
 					// Add a custom message
 					{
 						displayName: 'Custom Message',
-						name: 'messageOption',
-						values: [
-							{
-								displayName: 'Custom Message (can use HTML if needed)',
-								name: 'customMessage',
-								type: 'string',
-								default: '',
-								placeholder: 'Include BODY ONLY of email message here',
-								typeOptions: {editor: 'htmlEditor', rows: 5},
-								description: 'A custom message to send with the invoice. SEND BODY ONLY, the salutation and sign off are already included. To delete this field you need to delete the entire node and restart (n8n bug).',
-							},
-						],
+						description: 'A custom message to send with the invoice. SEND BODY ONLY, the salutation and sign off are already included. To delete this field you may have to delete the entire node and restart (n8n bug).',
+						name: 'customMessage',
+						type: 'string',
+						default: '',
+						placeholder: 'Include BODY ONLY of email message here',
+						typeOptions: {editor: 'htmlEditor', rows: 5},
 					},
 					// Enable PDF Download Button
 					{
 						displayName: 'Add PDF Download Button',
-						name: 'pdfOption',
-						values: [
-							{
-								displayName: 'Generate PDF Button',
-								name: 'pdfButton',
-								type: 'boolean',
-								default: true,
-								description: 'Enable this to add a "Download PDF" button.',
-							},
-						],
+						description: 'Enable this to add a "Download PDF" button.',
+						name: 'pdfButton',
+						type: 'boolean',
+						default: true,
 					},
 				],
 			},
@@ -93,31 +73,27 @@ export class QuickBooksInvoice implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
 		// register all custom helper functions before compiling
 		registerHelpers();
 
-		for (let i = 0; i < items.length; i++) {
-			const jsonData = this.getNodeParameter('data', i) as object;
-			const initialMessage = this.getNodeParameter('initialMessage', i) as boolean;
-			const options = this.getNodeParameter('options', i) as {
-				messageOption?: { customMessage?: string };
-				pdfOption?: { pdfButton?: boolean };
-			};
-			
-			// check for optional message content
-			let customMessage = options?.messageOption || false;
-			const customMessageContent = options?.messageOption?.customMessage ?? '';
-			if (customMessageContent === ''){
-				customMessage = false; // if by accident message option is clicked but no content is input, then ignore the custom message.
-			}
+		this.getInputData().forEach((_, itemIndex) => {
+			const jsonData = this.getNodeParameter('data', itemIndex) as object;
+			const initialMessage = this.getNodeParameter('initialMessage', itemIndex) as boolean;
+			const options = this.getNodeParameter('options', itemIndex) as {
+				customMessage?: string ;
+				pdfButton?: boolean ;
+		}
+
+			// check for custom message 
+			const customMessage = options?.customMessage ?? '';
+		
 			// check for optional pdf button
-			const pdfButton = options?.pdfOption?.pdfButton ?? false;
+			const pdfButton = options?.pdfButton ?? false;
 
 			// Merge all feilds into on object for handlebars tempalte
-			const combinedData = { ...jsonData, initialMessage, customMessage, customMessageContent, pdfButton };
+			const combinedData = { ...jsonData, initialMessage, customMessage, pdfButton };
 
 			// create the invoice template using handlebars
 			try {
@@ -127,7 +103,8 @@ export class QuickBooksInvoice implements INodeType {
 			} catch (error) {
 				throw new Error(`Handlebars rendering failed: ${error.message}`);
 			}
-		}
+		});
+
 		return [returnData];
 	}
 }
