@@ -314,13 +314,45 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                 </td>
             </tr>
         </table>
-        {{#if pdfButton}} 
-        <!-- Download Button -->
-        <div style="text-align: center; margin-top: 40px; padding-top: 20px;">
-            <a href="http://localhost:5678/webhook-test/pdf-download?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" style="display: inline-block; background-color: #0077C5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 600;">
-                Download PDF
-            </a>
-        </div> 
+                
+        <!-- Buttons -->
+        {{#if (and InvoicePaymentLink pdfButton)}}
+        <!-- Click Here To Pay Button and PDF Download Button -->
+        <div style="margin:0; padding:0;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+            <tr>
+              <td height="60" style="line-height: 60px; font-size: 60px;">&nbsp;</td>
+            </tr>
+          </table>
+          <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+            <tr>
+              <!-- Pay Button -->
+              <td align="right" style="padding: 0 8px;">
+                <a href="{{InvoicePaymentLink}}" target="_blank" style="background-color: #0077C5; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
+                  Click Here To Pay
+                </a>
+              </td>
+              <td style="padding: 0 8px; font-weight: 500; font-family: Arial, sans-serif; font-size: 14px; color: #333333; text-transform: uppercase;">
+                OR
+              </td>
+              <!-- PDF Button -->
+              <td align="left" style="padding: 0 8px;">
+                <a href="http://localhost:5678/webhook-test/pdf-download?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="background-color: #0077C5; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
+                  Download PDF
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        {{else}} 
+        {{#if pdfButton}}
+          <!-- Only show PDF button unless it is the actual PDf -->
+          <div style="text-align: center; margin-top: 40px; padding-top: 20px;">
+              <a href="http://localhost:5678/webhook-test/pdf-download?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="display: inline-block; background-color: #0077C5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600;">
+                  Download PDF
+              </a>
+          </div> 
+          {{/if}}
         {{/if}}
     </div>
 </body>

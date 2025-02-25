@@ -8,6 +8,7 @@ import {
 import * as Handlebars from 'handlebars';
 
 import { handlebarsTemplate } from './template';
+
 import { registerHelpers } from './helpers';
 
 export class QuickBooksInvoice implements INodeType {
