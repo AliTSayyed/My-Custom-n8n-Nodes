@@ -31,7 +31,7 @@ export class QuickBooksInvoice implements INodeType {
 				name: 'data',
 				type: 'json',
 				default: '',
-				required: false,
+				required: true,
 				description: 'Processed QuickBooks JSON data for invoice generation',
 			},
 			{
