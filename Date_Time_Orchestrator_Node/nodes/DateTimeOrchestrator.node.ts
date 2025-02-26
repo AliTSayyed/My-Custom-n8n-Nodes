@@ -5,6 +5,8 @@ import {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 
+import {DateTime} from 'luxon';
+
 export class DateTimeOrchestrator implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Date Time Orchestrator',
@@ -43,9 +45,9 @@ export class DateTimeOrchestrator implements INodeType {
 			{
 				// Enter the time of the date
 				displayName: 'Specify a Time (Military Time Format)',
-				name: 'stringTime',
+				name: 'timeString',
 				type: 'string',
-				default: 'HH:mm:ss',
+				default: '',
 				placeholder: 'HH:mm:ss',
 				required: true,
 				description: 'Specify the time you want with your date in a 24 Hour string format',
@@ -53,28 +55,35 @@ export class DateTimeOrchestrator implements INodeType {
 			{
 				// Enter the time zone
 				displayName: 'Select a Time Zone',
-				name: 'numberOfDays',
+				name: 'timeZone',
 				type: 'options',
 				options: [
 					{
 						name: 'Eastern Standard Time',
-						value: 'EST'
+						value: 'America/New_York'
 					},
 					{
 						name: 'Central Standard Time',
-						value: 'CST'
+						value: 'America/Chicago'
 					},
 					{
 						name: 'Pacific Standard Time',
-						value: 'PST'
+						value: 'America/Los_Angeles'
 					},
 					{
 						name: 'Mountain Standard Time',
-						value: 'MST'
+						value: 'America/Denver'
+					},
+					{
+						name: 'Alaska Standard Time',
+						value: 'America/Anchorage'
+					},
+					{
+						name: 'Hawaii-Aleutian Standard Time',
+						value: 'Pacific/Honolulu'
 					},
 				],
-				default: '',
-				placeholder: 'Add Time zone',
+				default: 'America/New_York',
 				required: true,
 				description: 'Select a time zone',
 			},
@@ -82,6 +91,68 @@ export class DateTimeOrchestrator implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		return [];
+		const returnData: INodeExecutionData[] = [];
+		const items = this.getInputData();
+
+		for (let i = 0; i < items.length; i++) {
+			const referenceDate = this.getNodeParameter('referenceDate', i) as string;
+			const daysOffset = this.getNodeParameter('daysOffset', i) as number;
+			const timeString = this.getNodeParameter('timeString', i) as string;
+			const timezone = this.getNodeParameter('timeZone', i) as string;
+			
+			try {
+				// create the new date with the offset applied
+				const baseDate = DateTime.fromISO(referenceDate, { zone: timezone });
+				if (!baseDate.isValid){
+					throw new Error(`Invalid date or timezone entered, expected format is YYYY-MM-DD and time zone selected is ${timezone}`)
+				}
+				const newDate = baseDate.plus({days: daysOffset});
+				
+				// Combine date and time in the specified timezone
+				  // Validate the time string format
+				if (!/^\d{1,2}:\d{2}(:\d{2})?$/.test(timeString)) {
+					throw new Error(`Invalid time format: ${timeString}. Expected format: HH:mm:ss or HH:mm`);
+				}
+				const [hours, minutes, seconds = '00'] = timeString.split(':');
+				
+				 // Validate time components
+				const hoursNum = parseInt(hours, 10);
+				const minutesNum = parseInt(minutes, 10);
+				const secondsNum = parseInt(seconds, 10);
+
+				if (isNaN(hoursNum) || hoursNum < 0 || hoursNum > 23) {
+					throw new Error(`Invalid hours value: ${hours}. Expected 0-23.`);
+				}
+				
+				if (isNaN(minutesNum) || minutesNum < 0 || minutesNum > 59) {
+					throw new Error(`Invalid minutes value: ${minutes}. Expected 0-59.`);
+				}
+				
+				if (isNaN(secondsNum) || secondsNum < 0 || secondsNum > 59) {
+					throw new Error(`Invalid seconds value: ${seconds}. Expected 0-59.`);
+				}
+
+				// // Set timezone (with validation but extra check not really needed)
+				// const withTimezone = newDate.setZone(timezone);
+				// if (!withTimezone.isValid) {
+				// 	throw new Error(`Invalid timezone: "${timezone}". ${withTimezone.invalidReason}`);
+				// }
+				
+				// Set time components
+				const localDateTime = newDate.set({
+					hour: hoursNum,
+					minute: minutesNum,
+					second: secondsNum
+				});
+				
+				// return the new date in UTC format
+				const output = localDateTime.toUTC().toISO();
+				returnData.push({ json:{ output }});
+
+			} catch (error){
+				throw new Error(`Date Conversion Failed: ${error.message}`);
+			}
+		};
+		return [returnData];
 	}
 }
