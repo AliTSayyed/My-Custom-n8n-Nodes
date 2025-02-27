@@ -43,6 +43,30 @@ export class QuickBooksInvoice implements INodeType {
 				description: 'Turn this on for the first email message.'
 			},
 			{
+				displayName: 'Week Before Outreach',
+				name: 'weekBeforeMessage',
+				type: 'boolean',
+				default: false,
+				required: false,
+				description: 'Turn this on for the second email message.'
+			},
+			{
+				displayName: '3 Days Before Outreach',
+				name: 'threeDaysBeforeMessage',
+				type: 'boolean',
+				default: false,
+				required: false,
+				description: 'Turn this on for the third email message.'
+			},
+			{
+				displayName: 'Due Date Outreach',
+				name: 'dueDayMessage',
+				type: 'boolean',
+				default: false,
+				required: false,
+				description: 'Turn this on for the fourth email message.'
+			},
+			{
 				displayName: 'Options',
 				name: 'options',
 				type: 'collection',
@@ -53,11 +77,11 @@ export class QuickBooksInvoice implements INodeType {
 					// Add a custom message
 					{
 						displayName: 'Custom Message',
-						description: 'A custom message to send with the invoice. SEND BODY ONLY, the salutation and sign off are already included. To delete this field you may have to delete the entire node and restart (n8n bug).',
+						description: 'A custom message to send with the invoice. You can use HTML for formatting.',
 						name: 'customMessage',
 						type: 'string',
 						default: '',
-						placeholder: 'Include BODY ONLY of email message here',
+						placeholder: 'Include a custom message here',
 						typeOptions: {editor: 'htmlEditor', rows: 5},
 					},
 					// Enable PDF Download Button
@@ -82,6 +106,9 @@ export class QuickBooksInvoice implements INodeType {
 		this.getInputData().forEach((_, itemIndex) => {
 			const jsonData = this.getNodeParameter('data', itemIndex) as object;
 			const initialMessage = this.getNodeParameter('initialMessage', itemIndex) as boolean;
+			const weekBeforeMessage = this.getNodeParameter('weekBeforeMessage', itemIndex) as boolean;
+			const threeDaysBeforeMessage = this.getNodeParameter('threeDaysBeforeMessage', itemIndex) as boolean;
+			const dueDayMessage = this.getNodeParameter('dueDayMessage', itemIndex) as boolean;
 			const options = this.getNodeParameter('options', itemIndex) as {
 				customMessage?: string ;
 				pdfButton?: boolean ;
@@ -94,7 +121,7 @@ export class QuickBooksInvoice implements INodeType {
 			const pdfButton = options?.pdfButton ?? false;
 
 			// Merge all feilds into on object for handlebars tempalte
-			const combinedData = { ...jsonData, initialMessage, customMessage, pdfButton };
+			const combinedData = { ...jsonData, initialMessage, weekBeforeMessage, threeDaysBeforeMessage, dueDayMessage, customMessage, pdfButton };
 
 			// create the invoice template using handlebars
 			try {

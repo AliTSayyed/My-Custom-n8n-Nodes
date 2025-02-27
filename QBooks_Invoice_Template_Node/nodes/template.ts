@@ -1,3 +1,5 @@
+import { initialMessage, weekBeforeMessage, threeDaysBeforeMessage, dueDayMessage } from './messages'; 
+
 export const handlebarsTemplate = `<!DOCTYPE html>
 <html lang="en">
 <head> 
@@ -7,40 +9,23 @@ export const handlebarsTemplate = `<!DOCTYPE html>
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #1f2937; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #f9fafb;">
     {{#if initialMessage }}
-    <div style="margin-bottom: 40px; padding: 24px; background-color: white; border-radius: 8px; color: #4b5563; font-family: Arial, Helvetica, sans-serif;">
-    <!-- Message Section -->
-        <p style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 500;">Hello {{#if CustomerName}}{{CustomerName}}{{/if}},</p>
-        
-        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
-            I hope you're doing well! Please find attached <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> for your records. <br>
-            This invoice is due on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. Let me know if you have any questions—we're happy to help.
-        </p>
-        
-        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
-            Thank you for your business!
-        </p>
-        
-        <p style="margin: 0; font-size: 0.95rem;">
-            Best regards,<br>
-            <span style="font-weight: 500;">{{CompanyName}} - Billing Team</span>
-        </p>
-    </div>
+      ${initialMessage}
+    {{/if}}
+
+     {{#if weekBeforeMessage }}
+      ${weekBeforeMessage}
+    {{/if}}
+
+     {{#if threeDaysBeforeMessage }}
+      ${threeDaysBeforeMessage}
+    {{/if}}
+
+     {{#if dueDayMessage }}
+      ${dueDayMessage}
     {{/if}}
 
     {{#if customMessage}}
-    <div style="margin-bottom: 40px; padding: 24px; background-color: white; border-radius: 8px; color: #4b5563; font-family: Arial, Helvetica, sans-serif;">
-      <!-- Custom Message Section -->
-      <p style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 500;">Hello {{#if CustomerName}}{{CustomerName}}{{/if}},</p>
-      
-      <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
-        {{{customMessage}}}
-      </p>
-      
-      <p style="margin: 0; font-size: 0.95rem;">
-          Best regards,<br>
-          <span style="font-weight: 500;">{{CompanyName}} - Billing Team</span>
-      </p>
-    </div>
+      {{customMessage}}
     {{/if}}
 
     <div style="background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden;">
@@ -71,7 +56,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                 </td>
                 {{#if CustomerShipAddr}}
                   <td style="width: 33%; vertical-align: top;">
-                      <div style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 12px; font-weight: 600;">SHIP TO</div>
+                      <div style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 12px; font-weight: 600;">SHIPPING ADDRESS</div>
                       {{#if CustomerShipAddr.City}}
                         {{#if CustomerName}}<div style="font-weight: 600; color: #374151;">{{CustomerName}}</div>{{/if}}
                         {{#if CustomerCompanyName}} {{#if (notEquals CustomerCompanyName CustomerName)}}<div>{{CustomerCompanyName}}</div>{{/if}} {{/if}}
