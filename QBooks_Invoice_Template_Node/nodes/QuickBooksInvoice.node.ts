@@ -81,21 +81,26 @@ export class QuickBooksInvoice implements INodeType {
 				type: 'collection',
 				placeholder: 'Add option',
 				default: {},
-				description: 'Optional settings for a custom message and/or PDF button.',
-				required: false,
 				options: [
 					// Add a custom message
 					{
 						displayName: 'Custom Message',
-						description: 'A custom message to send with the invoice. You can use HTML for formatting.',
 						name: 'customMessage',
 						type: 'string',
-						default: '',
 						placeholder: 'Include a custom message here',
 						typeOptions: {editor: 'htmlEditor', rows: 5},
+						default: '',
+						description: 'A custom message to send with the invoice. You can use HTML for formatting.',
 					},
+					// Mark if pdf is past its due date (not implemented in the template yet)
+					{
+						displayName: 'Overdue',
+						name: 'overdue',
+						type: 'boolean',
+						default: true,
+						description: 'Turn this on if an invoice is past its due date',
+					}
 				],
-
 			},
 		],
 	};
