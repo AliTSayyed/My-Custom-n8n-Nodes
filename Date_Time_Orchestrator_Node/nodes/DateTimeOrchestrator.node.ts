@@ -34,7 +34,7 @@ export class DateTimeOrchestrator implements INodeType {
 			},
 			{
 				// Enter the number of days before or after for the new date
-				displayName: 'Days Offset',
+				displayName: 'Days Offset (Saturdays will adjust to Fridays and Sundays will adjust to Mondays)',
 				name: 'daysOffset',
 				type: 'number',
 				default: '',
@@ -106,10 +106,21 @@ export class DateTimeOrchestrator implements INodeType {
 				if (!baseDate.isValid){
 					throw new Error(`Invalid date or timezone entered, expected format is YYYY-MM-DD and time zone selected is ${timezone}`)
 				}
-				const newDate = baseDate.plus({days: daysOffset});
+
+				let newDate = baseDate.plus({days: daysOffset});
+				
+				// Check if the new date is a Saturday, if it is then change the date to a Friday
+				if (newDate.weekday === 6) {
+					newDate = newDate.plus({days: -1});
+				} 
+
+				// check if the new date is a Sunday, if it is then change it to a Monday
+				if (newDate.weekday === 7){
+					newDate = newDate.plus({days:1});
+				}
 				
 				// Combine date and time in the specified timezone
-				  // Validate the time string format
+				// Validate the time string format
 				if (!/^\d{1,2}:\d{2}(:\d{2})?$/.test(timeString)) {
 					throw new Error(`Invalid time format: ${timeString}. Expected format: HH:mm:ss or HH:mm`);
 				}
@@ -132,7 +143,7 @@ export class DateTimeOrchestrator implements INodeType {
 					throw new Error(`Invalid seconds value: ${seconds}. Expected 0-59.`);
 				}
 
-				// // Set timezone (with validation but extra check not really needed)
+				// Set timezone (with validation but extra check not really needed)
 				// const withTimezone = newDate.setZone(timezone);
 				// if (!withTimezone.isValid) {
 				// 	throw new Error(`Invalid timezone: "${timezone}". ${withTimezone.invalidReason}`);
