@@ -8,19 +8,19 @@ export const handlebarsTemplate = `<!DOCTYPE html>
     <title>Invoice Template</title>
 </head>
 <body style="font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color: #1f2937; max-width: 800px; margin: 0 auto; padding: 40px 20px; background-color: #f9fafb;">
-    {{#if initialMessage }}
+    {{#if (equals outReachMessage 'initialMessage') }}
       ${initialMessage}
     {{/if}}
 
-     {{#if weekBeforeMessage }}
+    {{#if (equals outReachMessage 'weekBeforeMessage') }}
       ${weekBeforeMessage}
     {{/if}}
 
-     {{#if threeDaysBeforeMessage }}
+    {{#if (equals outReachMessage 'threeDaysBeforeMessage') }}
       ${threeDaysBeforeMessage}
     {{/if}}
 
-     {{#if dueDayMessage }}
+    {{#if (equals outReachMessage 'dueDayMessage') }}
       ${dueDayMessage}
     {{/if}}
 

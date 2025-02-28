@@ -35,37 +35,46 @@ export class QuickBooksInvoice implements INodeType {
 				description: 'Processed QuickBooks JSON data for invoice generation',
 			},
 			{
-				displayName: 'Inital Outreach',
-				name: 'initialMessage',
-				type: 'boolean',
-				default: false,
+				// Select an outreach message template
+				displayName: 'Select an outreach message template',
+				name: 'outReachMessage',
+				type: 'options',
+				options: [
+					{
+						name: 'None',
+						value: ''
+					},
+					{
+						name: 'Inital Outreach',
+						value: 'initialMessage'
+					},
+					{
+						name: 'Week Before Outreach',
+						value: 'weekBeforeMessage'
+					},
+					{
+						name: '3 Days Before Outreach',
+						value: 'threeDaysBeforeMessage'
+					},
+					{
+						name: 'Due Date Outreach',
+						value: 'dueDayMessage'
+					},
+				],
+				default: '',
 				required: false,
-				description: 'Turn this on for the first email message.'
+				description: 'Select the out reach message to be included at the top of the AR invoice email',
 			},
+			// PDF Download Button
 			{
-				displayName: 'Week Before Outreach',
-				name: 'weekBeforeMessage',
+				displayName: 'Add PDF Download Button',
+				name: 'pdfButton',
 				type: 'boolean',
-				default: false,
+				default: true,
 				required: false,
-				description: 'Turn this on for the second email message.'
+				description: 'Enable this to add a "Download PDF" button.',
 			},
-			{
-				displayName: '3 Days Before Outreach',
-				name: 'threeDaysBeforeMessage',
-				type: 'boolean',
-				default: false,
-				required: false,
-				description: 'Turn this on for the third email message.'
-			},
-			{
-				displayName: 'Due Date Outreach',
-				name: 'dueDayMessage',
-				type: 'boolean',
-				default: false,
-				required: false,
-				description: 'Turn this on for the fourth email message.'
-			},
+			// Extra options
 			{
 				displayName: 'Options',
 				name: 'options',
@@ -73,6 +82,7 @@ export class QuickBooksInvoice implements INodeType {
 				placeholder: 'Add option',
 				default: {},
 				description: 'Optional settings for a custom message and/or PDF button.',
+				required: false,
 				options: [
 					// Add a custom message
 					{
@@ -84,44 +94,29 @@ export class QuickBooksInvoice implements INodeType {
 						placeholder: 'Include a custom message here',
 						typeOptions: {editor: 'htmlEditor', rows: 5},
 					},
-					// Enable PDF Download Button
-					{
-						displayName: 'Add PDF Download Button',
-						description: 'Enable this to add a "Download PDF" button.',
-						name: 'pdfButton',
-						type: 'boolean',
-						default: true,
-					},
 				],
+
 			},
 		],
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const returnData: INodeExecutionData[] = [];
-
 		// register all custom helper functions before compiling
 		registerHelpers();
 
-		this.getInputData().forEach((_, itemIndex) => {
-			const jsonData = this.getNodeParameter('data', itemIndex) as object;
-			const initialMessage = this.getNodeParameter('initialMessage', itemIndex) as boolean;
-			const weekBeforeMessage = this.getNodeParameter('weekBeforeMessage', itemIndex) as boolean;
-			const threeDaysBeforeMessage = this.getNodeParameter('threeDaysBeforeMessage', itemIndex) as boolean;
-			const dueDayMessage = this.getNodeParameter('dueDayMessage', itemIndex) as boolean;
-			const options = this.getNodeParameter('options', itemIndex) as {
-				customMessage?: string ;
-				pdfButton?: boolean ;
-		}
+		const items = this.getInputData();
+		for (let i = 0; i < items.length; i++) {
+			const jsonData = this.getNodeParameter('data', i) as object;
+			const outReachMessage = this.getNodeParameter('outReachMessage', i) as string;
+			const pdfButton = this.getNodeParameter('pdfButton', i) as boolean;
+			const options = this.getNodeParameter('options', i) as {customMessage?: string};
 
 			// check for custom message 
 			const customMessage = options?.customMessage ?? '';
 		
-			// check for optional pdf button
-			const pdfButton = options?.pdfButton ?? false;
-
 			// Merge all feilds into on object for handlebars tempalte
-			const combinedData = { ...jsonData, initialMessage, weekBeforeMessage, threeDaysBeforeMessage, dueDayMessage, customMessage, pdfButton };
+			const combinedData = { ...jsonData, outReachMessage, customMessage, pdfButton };
 
 			// create the invoice template using handlebars
 			try {
@@ -131,8 +126,7 @@ export class QuickBooksInvoice implements INodeType {
 			} catch (error) {
 				throw new Error(`Handlebars rendering failed: ${error.message}`);
 			}
-		});
-
+		}
 		return [returnData];
 	}
 }

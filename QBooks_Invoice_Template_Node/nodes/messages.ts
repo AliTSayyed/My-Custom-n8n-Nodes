@@ -5,7 +5,7 @@ const greeting = `
          `;
 
 const signOff = `
-        <p style="margin: 0; font-size: 0.95rem;">
+        <p style="margin: 0; font-size: 1rem;">
             Best regards,<br>
             <span style="font-weight: 500;">{{CompanyName}} - Billing Team</span>
         </p>
@@ -14,12 +14,12 @@ const signOff = `
 
 export const initialMessage = `
     ${greeting}
-        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+        <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
             I hope you're doing well! Please find attached <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> for your records. <br>
             This invoice is due on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. Let me know if you have any questions—we're happy to help.
         </p>
         
-        <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+        <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
             Thank you for your business!
         </p>
     ${signOff}
@@ -27,12 +27,12 @@ export const initialMessage = `
 
 export const weekBeforeMessage = `
     ${greeting}
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Just a friendly reminder that <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due next week on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. <br>
         Please let us know if you need any assistance or have any questions regarding the payment.
     </p>
    
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Thank you for your business!
     </p>
 
@@ -42,12 +42,12 @@ export const weekBeforeMessage = `
 
 export const threeDaysBeforeMessage = `
     ${greeting}
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         We wanted to follow up as <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due in just a few days on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. <br> 
         Please ensure payment is arranged by the due date to avoid any delays. Let us know if you need any assistance.
     </p>
    
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Thank you for your business!
     </p>
     ${signOff}
@@ -56,12 +56,12 @@ export const threeDaysBeforeMessage = `
 
 export const dueDayMessage = `
     ${greeting}
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         This is a final reminder that <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due today. Please process the payment at your earliest convenience. <br>
         If the payment has already been made, kindly disregard this message.
     </p>
    
-    <p style="margin: 0 0 16px 0; font-size: 0.95rem; line-height: 1.6;">
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Thank you for your business!
     </p>
     ${signOff}
