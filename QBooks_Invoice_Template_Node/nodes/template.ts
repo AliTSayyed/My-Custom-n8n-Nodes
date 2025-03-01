@@ -1,4 +1,4 @@
-import { initialMessage, weekBeforeMessage, threeDaysBeforeMessage, dueDayMessage } from './messages'; 
+import { initialMessage, fiveDaysBeforeMessage, threeDaysBeforeMessage, dueDayMessage, recentlyOverdueMessage } from './outreachmessages'; 
 
 export const handlebarsTemplate = `<!DOCTYPE html>
 <html lang="en">
@@ -12,8 +12,8 @@ export const handlebarsTemplate = `<!DOCTYPE html>
       ${initialMessage}
     {{/if}}
 
-    {{#if (equals outReachMessage 'weekBeforeMessage') }}
-      ${weekBeforeMessage}
+    {{#if (equals outReachMessage 'fiveDaysBeforeMessage') }}
+      ${fiveDaysBeforeMessage}
     {{/if}}
 
     {{#if (equals outReachMessage 'threeDaysBeforeMessage') }}
@@ -24,8 +24,8 @@ export const handlebarsTemplate = `<!DOCTYPE html>
       ${dueDayMessage}
     {{/if}}
 
-    {{#if customMessage}}
-      {{customMessage}}
+     {{#if (equals outReachMessage 'recentlyOverdueMessage') }}
+      ${recentlyOverdueMessage}
     {{/if}}
 
     <div style="background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden;">
@@ -295,6 +295,13 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                                 BALANCE DUE {{format Balance}}
                             </td>
                         </tr>
+                        {{#if overdue}}
+                        <tr>
+                            <td colspan="2" style="padding-top: 10px; font-size: 1.25rem; font-weight: 700; color: #FF0000; text-align: right;">
+                                OVERDUE {{formatDate TxnDate}}
+                            </td>
+                        </tr>
+                        {{/if}}
                     </table> 
                 </td>
             </tr>
