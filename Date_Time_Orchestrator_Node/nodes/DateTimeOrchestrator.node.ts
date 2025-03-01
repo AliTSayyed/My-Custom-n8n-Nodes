@@ -15,7 +15,7 @@ export class DateTimeOrchestrator implements INodeType {
 		group: ['transform'],
 		version: 1,
 		description:
-			'Transform a date string into multiple customized datetime outputs with flexible offsets, times, and timezones.',
+			'Transform a date string into a customized datetime outputs adjusting for Business days. Output is always in America/NewYork time.',
 		defaults: {
 			name: 'Date Time Orchestrator',
 		},
@@ -185,12 +185,13 @@ export class DateTimeOrchestrator implements INodeType {
 					second: secondsNum,
 				});
 
-				// return the new date in UTC format
-				const newDateTimeUTC = newDateTime.toUTC().toISO();
+				// return the new date in America/New_York format
+				const newDateTimeEST = newDateTime.setZone('America/New_York');
 
-				// return the new date and time as wella as how many days adjusted
-				const output = {newDateTimeUTC}
-				returnData.push({ json: { output } });
+				// formatted for the wait node in n8n
+				const dateTimeString = newDateTimeEST.toFormat('yyyy-MM-dd\'T\'HH:mm:ss');
+
+				returnData.push({ json: { dateTimeString } });
 			} catch (error) {
 				throw new Error(`Date Conversion Failed: ${error.message}`);
 			}

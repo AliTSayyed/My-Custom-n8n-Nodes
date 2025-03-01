@@ -298,7 +298,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                         {{#if overdue}}
                         <tr>
                             <td colspan="2" style="padding-top: 10px; font-size: 1.25rem; font-weight: 700; color: #FF0000; text-align: right;">
-                                OVERDUE {{formatDate TxnDate}}
+                                OVERDUE {{formatDate DueDate}}
                             </td>
                         </tr>
                         {{/if}}
