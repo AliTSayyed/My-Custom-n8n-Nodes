@@ -37,10 +37,17 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                 {{#if (and CompanyAddress.City CompanyAddress.CountrySubDivisionCode)}}<div>{{CompanyAddress.City}}, {{CompanyAddress.CountrySubDivisionCode}} {{#if CompanyAddress.PostalCode}}{{CompanyAddress.PostalCode}}{{/if}}</div>{{/if}}
                 {{#if CompanyEmailAddress}}<div>{{CompanyEmailAddress}}</div>{{/if}}
             </div>
+
+        <!-- SVG Container -->
+        {{#if CompanyLogo}}
+          <div style="width: 200px; text-align: right;">
+              {{{CompanyLogo}}}
+          </div>
+        {{/if}} 
         </div>
 
         <!-- Invoice Title -->
-        <div style="color: #0077C5; font-size: 40px; font-weight: 700; margin: 0 0 40px 0; letter-spacing: -0.5px; position: relative; display: inline-block; padding-bottom: 10px; border-bottom: 3px solid #0077C5;">
+        <div style="color: {{PrimaryColor}}; font-size: 40px; font-weight: 700; margin: 0 0 40px 0; letter-spacing: -0.5px; position: relative; display: inline-block; padding-bottom: 10px; border-bottom: 3px solid {{PrimaryColor}};">
             INVOICE
         </div>
 
@@ -135,12 +142,12 @@ export const handlebarsTemplate = `<!DOCTYPE html>
           <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; margin: 20px 0;">
             <thead>
               <tr>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DATE</th>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">PRODUCT/SERVICE</th>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DESCRIPTION</th>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: center; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">QTY</th>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">RATE</th>
-                <th style="background-color: #0077C5; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">AMOUNT</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DATE</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">PRODUCT/SERVICE</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DESCRIPTION</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: center; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">QTY</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">RATE</th>
+                <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">AMOUNT</th>
               </tr>
             </thead>
             <tbody>
@@ -186,11 +193,11 @@ export const handlebarsTemplate = `<!DOCTYPE html>
         <table cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: separate; margin: 20px 0;">
             <thead>
                 <tr>
-                    <th style="background-color: #0077C5; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">PRODUCT/SERVICE</th>
-                    <th style="background-color: #0077C5; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DESCRIPTION</th>
-                    <th style="background-color: #0077C5; padding: 12px 16px; text-align: center; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">QTY</th>
-                    <th style="background-color: #0077C5; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">RATE</th>
-                    <th style="background-color: #0077C5; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">AMOUNT</th>
+                    <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">PRODUCT/SERVICE</th>
+                    <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: left; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">DESCRIPTION</th>
+                    <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: center; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">QTY</th>
+                    <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">RATE</th>
+                    <th style="background-color: {{PrimaryColor}}; padding: 12px 16px; text-align: right; font-size: 0.875rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.05em;">AMOUNT</th>
                 </tr>
             </thead>
             <tbody>
@@ -291,7 +298,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
                           </tr> 
                         {{/if}}  
                         <tr>
-                            <td colspan="2" style="padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 1.25rem; font-weight: 700; color: #0077C5; text-align: right;">
+                            <td colspan="2" style="padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 1.25rem; font-weight: 700; color: {{PrimaryColor}}; text-align: right;">
                                 BALANCE DUE {{format Balance}}
                             </td>
                         </tr>
@@ -308,7 +315,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
         </table>
                 
         <!-- Buttons -->
-        {{#if (and InvoicePaymentLink pdfButton)}}
+        {{#if (and InvoicePaymentURL pdfButton)}}
         <!-- Click Here To Pay Button and PDF Download Button -->
         <div style="margin:0; padding:0;">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
@@ -320,7 +327,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
             <tr>
               <!-- Pay Button -->
               <td align="right" style="padding: 0 8px;">
-                <a href="{{InvoicePaymentLink}}" target="_blank" style="background-color: #0077C5; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
+                <a href="{{InvoicePaymentURL}}" target="_blank" style="background-color: {{PrimaryColor}}; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
                   Click Here To Pay
                 </a>
               </td>
@@ -329,7 +336,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
               </td>
               <!-- PDF Button -->
               <td align="left" style="padding: 0 8px;">
-                <a href="http://localhost:5678/webhook-test/pdf-download?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="background-color: #0077C5; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
+                <a href="{{PdfDownloadURL}}?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="background-color: {{PrimaryColor}}; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600; font-family: Arial, sans-serif; font-size: 14px; display: inline-block;">
                   Download PDF
                 </a>
               </td>
@@ -340,7 +347,7 @@ export const handlebarsTemplate = `<!DOCTYPE html>
         {{#if pdfButton}}
           <!-- Only show PDF button unless it is the actual PDf -->
           <div style="text-align: center; margin-top: 40px; padding-top: 20px;">
-              <a href="http://localhost:5678/webhook-test/pdf-download?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="display: inline-block; background-color: #0077C5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600;">
+              <a href="{{PdfDownloadURL}}?invoiceid={{InvoiceID}}&companyid={{CompanyID}}&customerid={{CustomerID}}" target="_blank" style="display: inline-block; background-color: {{PrimaryColor}}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 30px; font-weight: 600;">
                   Download PDF
               </a>
           </div> 
@@ -349,3 +356,144 @@ export const handlebarsTemplate = `<!DOCTYPE html>
     </div>
 </body>
 </html>`;
+
+/*
+// Empty data object for invoice template
+const invoiceData = {
+  // Outreach message selection
+  outReachMessage: '',  // Options: 'initialMessage', 'fiveDaysBeforeMessage', 'threeDaysBeforeMessage', 'dueDayMessage', 'recentlyOverdueMessage'
+  
+  // Company Information
+  CompanyName: '',
+  CompanyAddress: {
+    Line1: '',
+    City: '',
+    CountrySubDivisionCode: '',
+    PostalCode: ''
+  },
+  CompanyEmailAddress: '',
+  CompanyLogo: '',
+  
+  // Primary Color for styling
+  PrimaryColor: '',
+  
+  // Customer Information
+  CustomerName: '',
+  CustomerCompanyName: '',
+  CustomerBillAddr: {
+    Line1: '',
+    City: '',
+    CountrySubDivisionCode: '',
+    PostalCode: ''
+  },
+  CustomerShipAddr: {
+    Line1: '',
+    City: '',
+    CountrySubDivisionCode: '',
+    PostalCode: ''
+  },
+  
+  // Invoice Information
+  DocNumber: '',
+  TxnDate: '',
+  DueDate: '',
+  SalesTerm: '',
+  
+  // Shipping Information
+  ShipDate: '',
+  ShipMethod: '',
+  TrackingNumber: '',
+  
+  // Custom Fields
+  CustomField: [
+    {
+      Name: '',
+      StringValue: ''
+    }
+  ],
+  
+  // Line Items
+  LineItems: [
+    {
+      DetailType: 'SalesItemLineDetail',
+      Description: '',
+      ServiceDate: '',
+      SalesItemLineDetail: {
+        ItemRef: {
+          name: '',
+          value: ''
+        },
+        Qty: '',
+        UnitPrice: '',
+        DiscountAmt: ''
+      },
+      Amount: ''
+    },
+    {
+      DetailType: 'GroupLineDetail',
+      GroupLineDetail: {
+        GroupItemRef: {
+          name: '',
+          value: ''
+        },
+        Quantity: '',
+        ServiceDate: ''
+      },
+      Amount: ''
+    },
+    {
+      DetailType: 'SubTotalLineDetail',
+      Amount: ''
+    },
+    {
+      DetailType: 'DiscountLineDetail',
+      DiscountLineDetail: {
+        DiscountPercent: ''
+      },
+      Amount: ''
+    },
+    {
+      DetailType: 'SalesItemLineDetail',
+      SalesItemLineDetail: {
+        ItemRef: {
+          value: 'SHIPPING_ITEM_ID',
+          name: ''
+        }
+      },
+      Amount: ''
+    }
+  ],
+  
+  // Tax Details
+  TaxDetails: {
+    TotalTax: '',
+    TaxLine: [
+      {
+        TaxPercent: ''
+      }
+    ]
+  },
+  
+  // Totals
+  TotalAmount: '',
+  PreviousPayments: '',
+  Deposit: '',
+  Balance: '',
+  
+  // Status
+  overdue: false,
+  
+  // URLs
+  InvoicePaymentURL: '',
+  PdfDownloadURL: '',
+  InvoiceID: '',
+  CompanyID: '',
+  CustomerID: '',
+  
+  // PDF Button Flag
+  pdfButton: true,
+  
+  // Customer Memo
+  CustomerMemo: ''
+};
+*/

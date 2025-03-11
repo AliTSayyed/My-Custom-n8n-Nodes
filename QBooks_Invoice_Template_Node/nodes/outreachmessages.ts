@@ -41,10 +41,13 @@ export const fiveDaysBeforeMessage = `
 export const threeDaysBeforeMessage = `
     ${greeting}
     <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
-        We wanted to follow up as <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due in just a few business days on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>. <br> 
+        We wanted to follow up as <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due in just a few business days on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span>.
+    </p>
+
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Please ensure payment is arranged by the due date to avoid any delays. Let us know if you need any assistance.
     </p>
-   
+
     <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         Thank you for your business!
     </p>
@@ -54,8 +57,11 @@ export const threeDaysBeforeMessage = `
 export const dueDayMessage = `
     ${greeting}
     <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
-        This is a final reminder that <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due today. Please process the payment at your earliest convenience. <br>
-        If the payment has already been made, kindly disregard this message.
+        This is a final reminder that <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> is due today. Please process the payment at your earliest convenience. 
+    </p>
+
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
+         If the payment has already been made, kindly disregard this message.
     </p>
    
     <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
@@ -68,7 +74,13 @@ export const recentlyOverdueMessage = `
     ${greeting}
     <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         We wanted to follow up as <span style="font-weight: 600; color: #374151;">Invoice #{{DocNumber}}</span> was recently due on <span style="font-weight: 600; color: #374151;">{{DueDate}}</span> and appears to be outstanding.<br>
-        Please arrange payment as soon as possible to bring your account up to date. Let us know if there's anything we need to be aware of regarding this payment.<br>
+    </p>
+
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
+        Please arrange payment as soon as possible to bring your account up to date. Let us know if there's anything we need to be aware of regarding this payment.
+    </p>
+
+    <p style="margin: 0 0 16px 0; font-size: 1rem; line-height: 1.6;">
         If the payment has already been made, kindly disregard this message.
     </p>
    
